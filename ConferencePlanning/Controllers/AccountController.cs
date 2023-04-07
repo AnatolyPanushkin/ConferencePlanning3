@@ -82,12 +82,13 @@ public class AccountController:ControllerBase
 
         var result = await _userManager.CreateAsync(user, registerDto.Password);
 
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         if (result.Succeeded)
         {
             return new UserDto
             {
                 DisplayName = user.DisplayName,
-                Token = _tokenService.CreateToken(user),
+                Token = token,
                 UserName = user.UserName
             };
         }
