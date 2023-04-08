@@ -7,10 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 
 namespace ConferencePlanning.Controllers;
-[AllowAnonymous]
+
 [Route("api/conferences")]
 [ApiController]
-
 public class ConferenceApiController:ControllerBase
 {
     private readonly IConferenceService _service;
@@ -22,15 +21,18 @@ public class ConferenceApiController:ControllerBase
         _configuration = configuration;
     }
 
-    [HttpGet("getAllConferences")]
+    /*[HttpGet("getAllConferences")]
     public IActionResult GetAllConferences()
     {
         return Ok( _service.GetAllConferences());
-    }
-    [HttpGet]
+    }*/
+  
     [Authorize(Roles = "Admin")]
+    [HttpGet("getAllConferences")]
+    
     public IActionResult GetConferences()
     {
+        var context = HttpContext.User;
         return Ok( _service.GetAllConferences());
     }
 

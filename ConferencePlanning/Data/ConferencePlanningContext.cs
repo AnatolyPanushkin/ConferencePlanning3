@@ -6,7 +6,7 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace ConferencePlanning.Data;
 
-public class ConferencePlanningContext:IdentityDbContext<User>
+public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
 {
     private readonly IConfiguration _configuration;
     public ConferencePlanningContext(DbContextOptions<ConferencePlanningContext> options,IConfiguration configuration):base(options)
@@ -25,8 +25,8 @@ public class ConferencePlanningContext:IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresExtension("adminpack")
-            .HasAnnotation("Relational:Collation", "Russian_Russia.1251");
+        /*modelBuilder.HasPostgresExtension("adminpack")
+            .HasAnnotation("Relational:Collation", "Russian_Russia.1251");*/
 
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Conference>(entity => { entity.HasKey(conference => new {conference.Id}); });

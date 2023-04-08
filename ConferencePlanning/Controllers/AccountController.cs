@@ -8,22 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Controllers;
 
-[AllowAnonymous]
+
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController:ControllerBase
 {
-    private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
-    private readonly TokenService _tokenService;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    //private readonly TokenService _tokenService;
 
-    public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        
         //_tokenService = tokenService;
     }
 
+    
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
@@ -48,7 +51,7 @@ public class AccountController:ControllerBase
         {
             return new UserDto
             {
-                DisplayName = user.DisplayName,
+                DisplayName = user.UserSurname,
                 Token = token,
                 UserName = user.UserName
             };
@@ -59,6 +62,7 @@ public class AccountController:ControllerBase
     }
 
 
+    [AllowAnonymous]
     [HttpPost("registration")]
     public async Task<ActionResult<UserDto>> Registration(RegisterDto registerDto)
     {
@@ -72,9 +76,9 @@ public class AccountController:ControllerBase
             return BadRequest("Email is taken");
         }
 
-        var user = new User
+        var user = new ApplicationUser
         {
-            DisplayName = registerDto.DisplayName,
+            UserSurname = registerDto.UserSurname,
             UserName = registerDto.UserName,
             Email = registerDto.Email,
             Bio = registerDto.UserName
@@ -87,7 +91,7 @@ public class AccountController:ControllerBase
         {
             return new UserDto
             {
-                DisplayName = user.DisplayName,
+                DisplayName = user.UserSurname,
                 Token = token,
                 UserName = user.UserName
             };

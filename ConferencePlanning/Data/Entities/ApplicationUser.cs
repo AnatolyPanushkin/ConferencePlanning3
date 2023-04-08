@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Data.Entities;
 
-public class User:IdentityUser
+public class ApplicationUser:IdentityUser
 {
-    public string DisplayName { get; set; }
+    public string UserSurname { get; set; }
     
     public string Bio { get; set; }
 }

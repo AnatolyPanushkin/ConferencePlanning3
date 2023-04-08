@@ -11,14 +11,16 @@ public static class IdentityServiceExtension
 {
     public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddIdentity<User, IdentityRole>(options =>
+        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
             })
             .AddEntityFrameworkStores<ConferencePlanningContext>()
-            .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider);
+            .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
+            .AddSignInManager<SignInManager<ApplicationUser>>();
         
         return services;
+        
         /*services.AddIdentityCore<User>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
@@ -40,7 +42,8 @@ public static class IdentityServiceExtension
                 ValidateAudience = false
             };
         } );
-        services.AddScoped<TokenService>();*/
-        
+        services.AddScoped<TokenService>();
+        return services;*/
+
     }
 }
