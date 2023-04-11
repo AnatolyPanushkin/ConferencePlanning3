@@ -10,5 +10,7 @@ public interface IConferenceService
     Task<Conference> GetConference(Guid id);
 
     Task<Conference> AddNewConference(ConferenceDto conferenceDto);
+
+    public Task<bool> AddUser(Guid id, string userId);
     public Task<string> GetPhotoName(Guid id);
 }

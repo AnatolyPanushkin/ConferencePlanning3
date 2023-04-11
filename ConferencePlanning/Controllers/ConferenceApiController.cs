@@ -60,5 +60,17 @@ public class ConferenceApiController:ControllerBase
         
         return Ok(conference);
     }
-    
+
+    [HttpPost("addUser")]
+    public async Task<ActionResult> AddUser(Guid id, string userId)
+    {
+        var result = await _service.AddUser(id, userId);
+
+        if (result==true)
+        {
+            return Ok();
+        }
+
+        return BadRequest("Not added");
+    }
 }

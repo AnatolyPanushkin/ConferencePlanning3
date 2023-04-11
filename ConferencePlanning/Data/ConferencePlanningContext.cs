@@ -18,6 +18,8 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
     
     public DbSet<Photo> Photos { get; set; }
 
+    public DbSet<UsersConferences> UsersConferences { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("ConferencePlanningContext"));
@@ -31,6 +33,21 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Conference>(entity => { entity.HasKey(conference => new {conference.Id}); });
         modelBuilder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
+        modelBuilder.Entity<ApplicationUser>(apUser =>
+        {
+            apUser.HasMany(user => user.Conferences)
+                .WithMany(conf => conf.Users)
+                .UsingEntity<UsersConferences>(
+                    conf => conf
+                        .HasOne(uc => uc.Conference)
+                        .WithMany(c => c.UsersConferences)
+                        .HasForeignKey(uc => uc.ConferenceId),
+                    us => us
+                        .HasOne(uc => uc.User)
+                        .WithMany(u => u.UsersConferences)
+                        .HasForeignKey(uc => uc.UserId)
+                );
+        });
     }
 }
 

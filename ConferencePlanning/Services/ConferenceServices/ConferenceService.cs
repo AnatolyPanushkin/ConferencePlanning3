@@ -30,17 +30,24 @@ public class ConferenceService : IConferenceService
 
     public async Task<Conference> AddNewConference(ConferenceDto conferenceDto)
     {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals("jhon@mail.ru"));
         var newConference = new Conference()
         {
             Id = Guid.NewGuid(),
             Name = conferenceDto.Name,
-            ConferenceTopic = conferenceDto.ConferenceTopic,
-            
+            ConferenceTopic = conferenceDto.ConferenceTopic
         };
         _context.Conferences.Add(newConference);
         await _context.SaveChangesAsync();
 
         return newConference;
+    }
+
+    public async Task<bool> AddUser(Guid id, string userId)
+    {
+        await _context.UsersConferences.AddAsync(new() { UserId = userId, ConferenceId = id });
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public async Task<string> GetPhotoName(Guid id)

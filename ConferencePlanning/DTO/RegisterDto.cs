@@ -17,6 +17,4 @@ public class RegisterDto
     [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$",
         ErrorMessage = "Password must contain the uppercase and lowercase letters, numbers and symbols")]
     public string Password { get; set; }
-    
-   
 }

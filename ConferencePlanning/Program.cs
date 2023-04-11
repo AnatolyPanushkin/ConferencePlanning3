@@ -2,6 +2,7 @@ using System.Net;
 using ConferencePlanning.Data;
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.IdentityServices;
+using ConferencePlanning.Services.AccountService;
 using ConferencePlanning.Services.ConferenceServices;
 using ConferencePlanning.Services.PhotosServices;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,7 @@ builder.Services.AddCors(opt =>
 
 builder.Services.AddScoped<IConferenceService, ConferenceService>();
 builder.Services.AddScoped<IPhotosService, PhotosService>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
 builder.Services.AddIdentityService(builder.Configuration);
 

@@ -12,9 +12,9 @@ public class Seed
         {
             var users = new List<ApplicationUser>
             {
-                new ApplicationUser {UserSurname = "Jhon", UserName = "Jhon", Email = "jhon@mail.ru",Bio = "Jhon"},
-                new ApplicationUser {UserSurname = "Bob", UserName = "Bob", Email = "bob@mail.ru",Bio = "Jhon"},
-                new ApplicationUser {UserSurname = "Tom", UserName = "Tom", Email = "tom@mail.ru",Bio = "Jhon"}
+                new ApplicationUser {UserSurname = "Jhon", UserName = "Jhon", Email = "jhon@mail.ru",Role = "User"},
+                new ApplicationUser {UserSurname = "Bob", UserName = "Bob", Email = "bob@mail.ru",Role = "User"},
+                new ApplicationUser {UserSurname = "Tom", UserName = "Tom", Email = "tom@mail.ru",Role = "User"}
             };
 
             foreach (var user in users)
@@ -40,7 +40,7 @@ public class Seed
                 UserName = "admin@example.com",
                 UserSurname = "Admin",
                 Email = "admin@example.com",
-                Bio = "admin"
+                Role = "Admin"
             };
 
             IdentityResult result = appUserManager.CreateAsync(user, "P@ssw0rd").Result;
@@ -64,7 +64,7 @@ public class Seed
                 UserName = "moderator@example.com",
                 UserSurname = "Moderator",
                 Email = "moderator@example.com",
-                Bio = "moderator"
+                Role = "Moderator"
             };
 
             IdentityResult result = appUserManager.CreateAsync(user, "P@ssw0rd").Result;

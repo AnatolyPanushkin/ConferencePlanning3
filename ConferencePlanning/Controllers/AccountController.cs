@@ -1,6 +1,7 @@
 ﻿using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO;
 using ConferencePlanning.IdentityServices;
+using ConferencePlanning.Services.AccountService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,14 @@ public class AccountController:ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    //private readonly TokenService _tokenService;
+    private readonly IRegistrationService _registrationService;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+        IRegistrationService registrationService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        
+        _registrationService = registrationService;
         //_tokenService = tokenService;
     }
 
@@ -53,7 +55,8 @@ public class AccountController:ControllerBase
             {
                 DisplayName = user.UserSurname,
                 Token = token,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Role = user.Role
             };
         }
         
@@ -63,41 +66,44 @@ public class AccountController:ControllerBase
 
 
     [AllowAnonymous]
-    [HttpPost("registration")]
-    public async Task<ActionResult<UserDto>> Registration(RegisterDto registerDto)
+    [HttpPost("registration/user")]
+    public async Task<ActionResult<UserDto>> RegistrationUser(RegisterDto registerDto)
     {
-        if (await _userManager.Users.AnyAsync(user => user.UserName == registerDto.UserName))
+        /*if (await _userManager.Users.AnyAsync(user => user.UserName == registerDto.UserName))
         {
             return BadRequest("UserName is taken");
-        }
-        
+        }*/
         if (await _userManager.Users.AnyAsync(user => user.Email == registerDto.Email))
         {
             return BadRequest("Email is taken");
         }
-
-        var user = new ApplicationUser
+        
+        var result = await _registrationService.UserRegistration(registerDto);
+        if (result!=null)
         {
-            UserSurname = registerDto.UserSurname,
-            UserName = registerDto.UserName,
-            Email = registerDto.Email,
-            Bio = registerDto.UserName
-        };
-
-        var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        if (result.Succeeded)
-        {
-            return new UserDto
-            {
-                DisplayName = user.UserSurname,
-                Token = token,
-                UserName = user.UserName
-            };
+            return result;
         }
 
         return BadRequest("Error signup");
     }
-    
+
+    [Authorize(Roles = "Admin")]    
+    [HttpPost("registration/moderator")]
+    public async Task<ActionResult<UserDto>> RegistrationModerator(RegisterDto registerDto)
+    {
+        if (await _userManager.Users.AnyAsync(user => user.Email == registerDto.Email))
+        {
+            return BadRequest("Email is taken");
+        }
+        
+        var moderatorRegistrationResult = await _registrationService.ModeratorRegistration(registerDto);
+                
+        if (moderatorRegistrationResult!=null)
+        {
+            return moderatorRegistrationResult;
+        }
+                
+        return BadRequest("Error signup");
+    }
+
 }
