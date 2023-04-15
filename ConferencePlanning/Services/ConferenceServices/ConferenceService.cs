@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using ConferencePlanning.Data;
+using ConferencePlanning.Mappers;
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -30,13 +31,9 @@ public class ConferenceService : IConferenceService
 
     public async Task<Conference> AddNewConference(ConferenceDto conferenceDto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals("jhon@mail.ru"));
-        var newConference = new Conference()
-        {
-            Id = Guid.NewGuid(),
-            Name = conferenceDto.Name,
-            ConferenceTopic = conferenceDto.ConferenceTopic
-        };
+        var newConference = conferenceDto.MapConferenceDtoToConference();
+        newConference.Id = Guid.NewGuid();
+        
         _context.Conferences.Add(newConference);
         await _context.SaveChangesAsync();
 
@@ -55,5 +52,14 @@ public class ConferenceService : IConferenceService
         var photo = await _context.Photos.FirstOrDefaultAsync(photo => photo.Id == id);
 
         return photo.Name;
+    }
+
+    public async Task<Conference> GetConferenceWithSections(Guid id)
+    {
+        var result = await _context.Conferences
+            .Include(conf=>conf.Sections)
+            .FirstOrDefaultAsync(conf => conf.Id == id);
+
+        return result;
     }
 }

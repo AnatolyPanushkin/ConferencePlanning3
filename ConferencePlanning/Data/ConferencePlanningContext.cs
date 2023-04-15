@@ -17,6 +17,8 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
     public DbSet<Conference> Conferences { get; set; }
     
     public DbSet<Photo> Photos { get; set; }
+    
+    public DbSet<Section> Sections { get; set; }
 
     public DbSet<UsersConferences> UsersConferences { get; set; }
 
@@ -31,8 +33,39 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
             .HasAnnotation("Relational:Collation", "Russian_Russia.1251");*/
 
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Conference>(entity => { entity.HasKey(conference => new {conference.Id}); });
+
+        var conferences = new Conference[]
+        {
+            new(){Id = Guid.NewGuid(),Name = "Conference1",ShortTopic = "Conference1", FullTopic = "Conference1",Date = DateOnly.FromDateTime(DateTime.Now),
+                StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
+                Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
+            
+            new(){Id = Guid.NewGuid(),Name = "Conference2",ShortTopic = "Conference2", FullTopic = "Conference2",Date = DateOnly.FromDateTime(DateTime.Now),
+                StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
+                Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
+            
+            new(){Id = Guid.NewGuid(),Name = "Conference3",ShortTopic = "Conference3", FullTopic = "Conference3",Date = DateOnly.FromDateTime(DateTime.Now),
+                StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
+                Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
+            
+            new(){Id = Guid.NewGuid(),Name = "Conference4",ShortTopic = "Conference4", FullTopic = "Conference4",Date = DateOnly.FromDateTime(DateTime.Now),
+                StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
+                Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"}
+        };
+        
+        modelBuilder.Entity<Conference>(entity =>
+        {
+            entity.HasKey(conference => new {conference.Id});
+
+            entity.HasData(conferences);
+            
+            entity
+                .HasMany(conf => conf.Sections)
+                .WithOne(section => section.Conference);
+        });
+        
         modelBuilder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
+        
         modelBuilder.Entity<ApplicationUser>(apUser =>
         {
             apUser.HasMany(user => user.Conferences)
@@ -48,6 +81,9 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
                         .HasForeignKey(uc => uc.UserId)
                 );
         });
+        
+        
+        
     }
 }
 

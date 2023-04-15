@@ -1,9 +1,12 @@
-﻿using ConferencePlanning.Data.Entities;
+﻿using ConferencePlanning.Data;
+using ConferencePlanning.Data.Entities;
+// using ConferencePlanning.Data.Migrations;
 using ConferencePlanning.DTO;
 using ConferencePlanning.Services.ConferenceServices;
 using ConferencePlanning.Services.PhotosServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ConferencePlanning.Controllers;
@@ -12,13 +15,16 @@ namespace ConferencePlanning.Controllers;
 [ApiController]
 public class ConferenceApiController:ControllerBase
 {
+
     private readonly IConferenceService _service;
+    private readonly IPhotosService _photosService;
     private readonly IConfiguration _configuration;
 
-    public ConferenceApiController(IConferenceService service, IConfiguration configuration)
+    public ConferenceApiController(IConferenceService service, IConfiguration configuration, IPhotosService photosService)
     {
         _service = service;
         _configuration = configuration;
+        _photosService = photosService;
     }
 
     /*[HttpGet("getAllConferences")]
@@ -27,7 +33,7 @@ public class ConferenceApiController:ControllerBase
         return Ok( _service.GetAllConferences());
     }*/
   
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [HttpGet("getAllConferences")]
     
     public IActionResult GetConferences()
@@ -61,6 +67,26 @@ public class ConferenceApiController:ControllerBase
         return Ok(conference);
     }
 
+    [HttpPost("addNewConferenceWithImg")]
+    public async Task<ActionResult<Conference>> AddNewConferenceWithImg([FromForm]ConferenceWithImgDto conferenceWithImgDto)
+    {
+        var fullPath = $"{_configuration["PathConferencePhoto"]}\\{conferenceWithImgDto.Img.FileName}";
+        var fileStream = new FileStream(fullPath, FileMode.Create);
+        await conferenceWithImgDto.Img.CopyToAsync(fileStream);
+        
+        var conference = await _service.AddNewConference(conferenceWithImgDto.ConferenceDto);
+        var photo = await _photosService.AddNewConferencePhoto(conference.Id,conferenceWithImgDto.Img.FileName);
+
+        var imgUrl = $"api/photos/getConferencePhotoById{conference.PhotoId}";
+
+        var result = new
+        {
+            conference, imgUrl
+        };
+        return Ok(result);
+       
+    }
+    
     [HttpPost("addUser")]
     public async Task<ActionResult> AddUser(Guid id, string userId)
     {
@@ -72,5 +98,15 @@ public class ConferenceApiController:ControllerBase
         }
 
         return BadRequest("Not added");
+    }
+    
+    
+
+    [HttpGet("getConferenceWithSections")]
+    public async Task<ActionResult> GetConferenceWithSections(Guid id)
+    {
+        var result =await _service.GetConferenceWithSections(id);
+
+        return Ok(result);
     }
 }
