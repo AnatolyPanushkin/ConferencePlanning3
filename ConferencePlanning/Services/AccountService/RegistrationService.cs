@@ -13,17 +13,16 @@ public class RegistrationService:IRegistrationService
         _userManager = userManager;
     }
     
-    public async Task<UserDto?> ModeratorRegistration(RegisterDto registerDto)
+    public async Task<UserDto?> ModeratorRegistration(ModeratorRegistrationDto moderatorRegisterDto)
     {
         var moderator = new ApplicationUser
         {
-            UserName = registerDto.UserName,
-            UserSurname = registerDto.UserSurname,
-            Email = registerDto.Email,
-            Role = "Moderator",
+            OrganizationName = moderatorRegisterDto.OrganizationName,
+            Email = moderatorRegisterDto.Email,
+            Role = "Moderator"
         };
 
-        IdentityResult moderatorResult = _userManager.CreateAsync(moderator, registerDto.Password).Result;
+        IdentityResult moderatorResult = _userManager.CreateAsync(moderator, moderatorRegisterDto.Password).Result;
                 
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(moderator);
                 
@@ -32,9 +31,8 @@ public class RegistrationService:IRegistrationService
             _userManager.AddToRoleAsync(moderator, "Moderator").Wait();
             return new UserDto
             {
-                DisplayName = moderator.UserSurname,
+                Id = moderator.Id,
                 Token = token,
-                UserName = moderator.UserName,
                 Role = moderator.Role
             };
         }
@@ -59,6 +57,7 @@ public class RegistrationService:IRegistrationService
         {
             return new UserDto
             {
+                Id = user.Id,
                 DisplayName = user.UserSurname,
                 Token = token,
                 UserName = user.UserName,

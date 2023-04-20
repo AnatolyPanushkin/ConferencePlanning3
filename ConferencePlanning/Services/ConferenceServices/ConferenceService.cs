@@ -45,6 +45,17 @@ public class ConferenceService : IConferenceService
         await _context.UsersConferences.AddAsync(new() { UserId = userId, ConferenceId = id });
         await _context.SaveChangesAsync();
         return true;
+
+        /*var conference = await _context.Conferences.FirstOrDefaultAsync(conf => conf.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.Id.Equals(userId));
+        
+        conference.Users.Add(user);
+        user.Conferences.Add(conference);
+        
+        await _context.UsersConferences.AddAsync(new() { UserId = userId, ConferenceId = id });
+        
+        await _context.SaveChangesAsync();
+        return true;*/
     }
 
     public async Task<string> GetPhotoName(Guid id)
@@ -61,5 +72,20 @@ public class ConferenceService : IConferenceService
             .FirstOrDefaultAsync(conf => conf.Id == id);
 
         return result;
+    }
+
+    public async Task<IEnumerable<Conference>> GetUserConference(string id)
+    {
+        /*var userConferences = _context.UsersConferences
+            .Where(uc => uc.UserId.Equals(id))
+            .Include(uc=>uc.Conference);
+        
+        
+        var conferences = _context.Conferences.Where(conf=>conf.Id==userConferences.)*/
+
+
+        var user = await _context.Users.Include(user => user.Conferences)
+            .FirstOrDefaultAsync(user => user.Id.Equals(id));
+        return user.Conferences;
     }
 }

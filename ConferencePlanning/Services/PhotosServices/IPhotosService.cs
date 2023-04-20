@@ -7,5 +7,7 @@ public interface IPhotosService
 {
     public Task<int> AddNewConferencePhoto(Guid conferenceId, string photoName);
 
+    public Task<int> AddNewUserPhoto(string id, string photoName);
+
     public Task<string> GetPhotoName(Guid id);
 }

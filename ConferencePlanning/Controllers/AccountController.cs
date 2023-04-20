@@ -53,6 +53,7 @@ public class AccountController:ControllerBase
         {
             return new UserDto
             {
+                Id = user.Id,
                 DisplayName = user.UserSurname,
                 Token = token,
                 UserName = user.UserName,
@@ -89,14 +90,14 @@ public class AccountController:ControllerBase
 
     [Authorize(Roles = "Admin")]    
     [HttpPost("registration/moderator")]
-    public async Task<ActionResult<UserDto>> RegistrationModerator(RegisterDto registerDto)
+    public async Task<ActionResult<UserDto>> RegistrationModerator(ModeratorRegistrationDto moderatorRegisterDto)
     {
-        if (await _userManager.Users.AnyAsync(user => user.Email == registerDto.Email))
+        if (await _userManager.Users.AnyAsync(user => user.Email == moderatorRegisterDto.Email))
         {
             return BadRequest("Email is taken");
         }
         
-        var moderatorRegistrationResult = await _registrationService.ModeratorRegistration(registerDto);
+        var moderatorRegistrationResult = await _registrationService.ModeratorRegistration(moderatorRegisterDto);
                 
         if (moderatorRegistrationResult!=null)
         {

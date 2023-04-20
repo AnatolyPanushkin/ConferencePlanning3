@@ -15,4 +15,6 @@ public interface IConferenceService
     public Task<string> GetPhotoName(Guid id);
 
     public Task<Conference> GetConferenceWithSections(Guid id);
+
+    public Task<IEnumerable<Conference>> GetUserConference(string id);
 }

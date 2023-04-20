@@ -66,7 +66,7 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
         
         modelBuilder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
         
-        modelBuilder.Entity<ApplicationUser>(apUser =>
+        /*modelBuilder.Entity<ApplicationUser>(apUser =>
         {
             apUser.HasMany(user => user.Conferences)
                 .WithMany(conf => conf.Users)
@@ -80,10 +80,15 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
                         .WithMany(u => u.UsersConferences)
                         .HasForeignKey(uc => uc.UserId)
                 );
+        });*/
+
+        modelBuilder.Entity<UsersConferences>(entity =>
+        {
+            entity.HasKey(source => new { source.UserId, source.ConferenceId });
         });
-        
-        
-        
+
+
+
     }
 }
 

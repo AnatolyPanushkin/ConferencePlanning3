@@ -2,6 +2,10 @@
 
 public class Conference
 {
+    public Conference()
+    {
+        UsersConferences = new HashSet<UsersConferences>();
+    }
     public Guid Id { get; set; }
     public string Name { get; set;}
     
@@ -26,9 +30,10 @@ public class Conference
     
     
     public ICollection<Section> Sections { get; set; } = new List<Section>();
+    
     public List<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
 
     [System.Text.Json.Serialization.JsonIgnore]
-    public List<UsersConferences> UsersConferences { get; set; } = new List<UsersConferences>();
+    public virtual ICollection<UsersConferences> UsersConferences { get; set; }
     
 }

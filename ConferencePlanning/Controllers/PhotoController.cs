@@ -43,4 +43,18 @@ public class PhotoController:ControllerBase
         
         return HttpContext.Response.SendFileAsync("C:\\Users\\User\\RiderProjects\\ConferencePlanning3\\ConferencePlanning\\ImgFiles\\ConferencesImg\\img2.jpg");
     }
+
+    [HttpPost("addNewUserPhotoById{userId}")]
+    public async Task<ActionResult> AddNewUserPhotoById(string id, IFormFile formFile)
+    {
+        var fullPath = $"{_configuration["PathConferencePhoto"]}\\{formFile.FileName}";
+        
+        var photo = await _service.AddNewUserPhoto(id,formFile.FileName);
+        
+        var fileStream = new FileStream(fullPath, FileMode.Create);
+        
+        await formFile.CopyToAsync(fileStream);
+
+        return Ok(photo);
+    }
 }

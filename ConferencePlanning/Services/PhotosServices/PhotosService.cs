@@ -33,7 +33,26 @@ public class PhotosService:IPhotosService
 
         return result;
     }
-    
+
+    public async Task<int> AddNewUserPhoto(string id, string photoName)
+    {
+        var photo = new Photo()
+        {
+            Id = new Guid(),
+            Name = photoName
+        };
+        
+        _context.Photos.Add(photo);
+
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.Id.Equals(id));
+
+        user.PhotoId = photo.Id;
+        
+        var result = await _context.SaveChangesAsync();
+
+        return result;
+    }
+
     public async Task<string> GetPhotoName(Guid id)
     {
         var photo = await _context.Photos.FirstOrDefaultAsync(photo => photo.Id == id);

@@ -38,7 +38,7 @@ public class ConferenceApiController:ControllerBase
     
     public IActionResult GetConferences()
     {
-        var context = HttpContext.User;
+       
         return Ok( _service.GetAllConferences());
     }
 
@@ -108,5 +108,12 @@ public class ConferenceApiController:ControllerBase
         var result =await _service.GetConferenceWithSections(id);
 
         return Ok(result);
+    }
+
+    [HttpGet("getUserConference")]
+    public async Task<ActionResult> GetUserConference(string id)
+    {
+        var conferences = await _service.GetUserConference(id);
+        return Ok(conferences);
     }
 }
