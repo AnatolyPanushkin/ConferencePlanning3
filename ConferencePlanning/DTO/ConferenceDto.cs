@@ -2,10 +2,13 @@
 
 public class ConferenceDto
 {
+    //тип конференции, состоянии конференции
     public string Name { get; set;}
     public string ShortTopic { get; set; }
     
     public string FullTopic { get; set; }
+    
+    //необязательные поля
     public string Addres { get; set; }
     public string City { get; set; }
     

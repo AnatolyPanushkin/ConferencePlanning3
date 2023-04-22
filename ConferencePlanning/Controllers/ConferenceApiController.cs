@@ -35,7 +35,6 @@ public class ConferenceApiController:ControllerBase
   
     //[Authorize(Roles = "Admin")]
     [HttpGet("getAllConferences")]
-    
     public IActionResult GetConferences()
     {
        

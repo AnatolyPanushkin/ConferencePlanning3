@@ -4,12 +4,12 @@ namespace ConferencePlanning.DTO;
 
 public class ModeratorEditDto
 {
-    [Required]
     public string Id { get; set; }
-    [Required]
+
     public string OrganizationName { get; set; }
     
-    [Required]
+    public string Position { get; set; }
+    
     [EmailAddress]
     public string Email { get; set; }
 }

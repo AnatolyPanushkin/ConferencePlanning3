@@ -10,6 +10,9 @@ public class ModeratorDto
     public string OrganizationName { get; set; }
     
     [Required]
+    public string Position { get; set; }
+    
+    [Required]
     [EmailAddress]
     public string Email { get; set; }
 }

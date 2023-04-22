@@ -31,6 +31,7 @@ public class ModeratorController:ControllerBase
         {   
             Id = moderator.Id,
             OrganizationName = moderator.OrganizationName,
+            Position = moderator.Position,
             Email = moderator.Email
         };
         
@@ -45,6 +46,7 @@ public class ModeratorController:ControllerBase
 
         updateModerator.OrganizationName = moderatorDto.OrganizationName;
         updateModerator.Email = moderatorDto.Email;
+        updateModerator.Position = moderatorDto.Position;
         
         await _context.SaveChangesAsync();
 

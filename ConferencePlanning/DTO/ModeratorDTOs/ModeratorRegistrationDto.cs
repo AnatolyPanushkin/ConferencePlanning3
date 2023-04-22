@@ -6,10 +6,11 @@ public class ModeratorRegistrationDto
 {
     [Required]
     public string Id { get; set; }
+    
     [Required]
     public string OrganizationName { get; set; }
-    [Required]
     
+    [Required]
     [EmailAddress]
     public string Email { get; set; }
     

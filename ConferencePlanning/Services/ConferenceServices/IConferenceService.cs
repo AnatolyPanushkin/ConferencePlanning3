@@ -16,5 +16,5 @@ public interface IConferenceService
 
     public Task<Conference> GetConferenceWithSections(Guid id);
 
-    public Task<IEnumerable<Conference>> GetUserConference(string id);
+    public Task<ICollection<ConferenceDto>> GetUserConference(string id);
 }

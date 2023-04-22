@@ -74,18 +74,28 @@ public class ConferenceService : IConferenceService
         return result;
     }
 
-    public async Task<IEnumerable<Conference>> GetUserConference(string id)
+    public async Task<ICollection<ConferenceDto>> GetUserConference(string id)
     {
         /*var userConferences = _context.UsersConferences
             .Where(uc => uc.UserId.Equals(id))
-            .Include(uc=>uc.Conference);
+            .Include(uc=>uc.Conference);S
         
         
         var conferences = _context.Conferences.Where(conf=>conf.Id==userConferences.)*/
 
-
-        var user = await _context.Users.Include(user => user.Conferences)
+        var conf = _context.UsersConferences.Where(c => c.UserId.Equals(id))
+            .Select(c => new ConferenceDto
+            {
+                Name = c.Conference.Name
+            }).ToList();
+        //Select проекция 
+        
+        /*var user = await _context.Users
+            .Include(user => user.UsersConferences)
+            .ThenInclude(uc=>uc.Conference)
             .FirstOrDefaultAsync(user => user.Id.Equals(id));
-        return user.Conferences;
+        return user;*/
+
+        return conf;
     }
 }

@@ -13,11 +13,14 @@ public class ApplicationUser:IdentityUser
 
     public string UserSurname { get; set; }
     
+    public string Patronymic { get; set; }
+    
+    public string Position { get; set; }
     public string Role { get; set; }
     
     public string? OrganizationName { get; set; }
     
-    public List<Conference> Conferences { get; set; } = new List<Conference>();
+    public ICollection<Conference> Conferences { get; set; } = new List<Conference>();
     
     [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<UsersConferences>  UsersConferences{ get; set; }
