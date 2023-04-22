@@ -34,14 +34,14 @@ public class PhotoController:ControllerBase
         return Ok(photo);
     }
 
-    [HttpGet("getConferencePhotoById")]
-    public async Task<ActionResult<Task>> GetConferencePhotoById()
+    [HttpGet("getConferencePhotoById{confId}")]
+    public async Task<ActionResult> GetConferencePhotoById(Guid confId)
     {
-        //var photo =await _service.GetPhotoName(id);
+        var photo =await _service.GetPhotoName(confId);
         
-        var fullPath = $"{_configuration["PathConferencePhoto"]}\\img1.jpg";
+        var fullPath = $"{_configuration["PathConferencePhoto"]}\\{photo}";
         
-        return HttpContext.Response.SendFileAsync("C:\\Users\\User\\RiderProjects\\ConferencePlanning3\\ConferencePlanning\\ImgFiles\\ConferencesImg\\img2.jpg");
+        return Ok(HttpContext.Response.SendFileAsync(fullPath));
     }
 
     [HttpPost("addNewUserPhotoById{userId}")]

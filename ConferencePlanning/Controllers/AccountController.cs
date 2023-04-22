@@ -88,7 +88,7 @@ public class AccountController:ControllerBase
         return BadRequest("Error signup");
     }
 
-    [Authorize(Roles = "Admin")]    
+    //[Authorize(Roles = "Admin")]    
     [HttpPost("registration/moderator")]
     public async Task<ActionResult<UserDto>> RegistrationModerator(ModeratorRegistrationDto moderatorRegisterDto)
     {

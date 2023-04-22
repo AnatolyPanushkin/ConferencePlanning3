@@ -1,5 +1,6 @@
 ﻿using ConferencePlanning.Data.Entities;
-using ConferencePlanning.DTO;
+using ConferencePlanning.DTO.ConferenceDto;
+
 
 namespace ConferencePlanning.Mappers;
 

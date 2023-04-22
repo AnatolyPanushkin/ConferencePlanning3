@@ -53,10 +53,16 @@ public class PhotosService:IPhotosService
         return result;
     }
 
-    public async Task<string> GetPhotoName(Guid id)
+    public async Task<string> GetPhotoName(Guid confId)
     {
-        var photo = await _context.Photos.FirstOrDefaultAsync(photo => photo.Id == id);
+        var conf = await _context.Conferences.FirstOrDefaultAsync(conf => conf.Id == confId);
 
-        return photo.Name;
+        if (conf!=null)
+        {
+            var photo = await _context.Photos.FirstOrDefaultAsync(photo => photo.Id == conf.PhotoId);
+            return photo.Name;
+        }
+
+        return null;
     }
 }

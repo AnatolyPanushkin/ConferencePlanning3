@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ConferencePlanning.DTO;
+namespace ConferencePlanning.DTO.ConferenceDto;
 
 public class ConferenceWithImgDto
 {

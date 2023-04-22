@@ -2,7 +2,7 @@
 using ConferencePlanning.Data;
 using ConferencePlanning.Mappers;
 using ConferencePlanning.Data.Entities;
-using ConferencePlanning.DTO;
+using ConferencePlanning.DTO.ConferenceDto;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Services.ConferenceServices;
@@ -17,9 +17,22 @@ public class ConferenceService : IConferenceService
         _context = context;
         _configuration = configuration;
     }
-    public IEnumerable<Conference> GetAllConferences()
+    public async Task<ICollection<ConferenceShortDto>> GetAllConferences()
     {
-        return _context.Conferences.ToList();
+        var conferences = await _context.Conferences
+            .Select(c => new ConferenceShortDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ShortTopic = c.ShortTopic,
+                    Type = c.Type,
+                    Date = c.Date,
+                    ImgUrl = $"getConferencePhotoById{c.Id}"
+                })
+            .ToListAsync();
+
+
+        return conferences;
     }
     
 
@@ -74,28 +87,19 @@ public class ConferenceService : IConferenceService
         return result;
     }
 
-    public async Task<ICollection<ConferenceDto>> GetUserConference(string id)
+    public async Task<ICollection<ConferenceShortDto>> GetUserConferences(string id)
     {
-        /*var userConferences = _context.UsersConferences
-            .Where(uc => uc.UserId.Equals(id))
-            .Include(uc=>uc.Conference);S
-        
-        
-        var conferences = _context.Conferences.Where(conf=>conf.Id==userConferences.)*/
-
-        var conf = _context.UsersConferences.Where(c => c.UserId.Equals(id))
-            .Select(c => new ConferenceDto
+        var conf = await _context.UsersConferences.Where(c => c.UserId.Equals(id))
+            .Select(c => new ConferenceShortDto
             {
-                Name = c.Conference.Name
-            }).ToList();
-        //Select проекция 
+                Id = c.Conference.Id,
+                Name = c.Conference.Name,
+                ShortTopic = c.Conference.ShortTopic,
+                Type = c.Conference.Type,
+                Date = c.Conference.Date,
+                ImgUrl = $"getConferencePhotoById{c.Conference.Id}"
+            }).ToListAsync();
         
-        /*var user = await _context.Users
-            .Include(user => user.UsersConferences)
-            .ThenInclude(uc=>uc.Conference)
-            .FirstOrDefaultAsync(user => user.Id.Equals(id));
-        return user;*/
-
         return conf;
     }
 }

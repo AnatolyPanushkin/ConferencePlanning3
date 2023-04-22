@@ -36,19 +36,19 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
 
         var conferences = new Conference[]
         {
-            new(){Id = Guid.NewGuid(),Name = "Conference1",ShortTopic = "Conference1", FullTopic = "Conference1",Date = DateOnly.FromDateTime(DateTime.Now),
+            new(){Id = Guid.NewGuid(),Name = "Conference1", Type = "offline",ShortTopic = "Conference1", FullTopic = "Conference1",Date = DateOnly.FromDateTime(DateTime.Now),
                 StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
                 Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
             
-            new(){Id = Guid.NewGuid(),Name = "Conference2",ShortTopic = "Conference2", FullTopic = "Conference2",Date = DateOnly.FromDateTime(DateTime.Now),
+            new(){Id = Guid.NewGuid(),Name = "Conference2",Type = "offline",ShortTopic = "Conference2", FullTopic = "Conference2",Date = DateOnly.FromDateTime(DateTime.Now),
                 StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
                 Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
             
-            new(){Id = Guid.NewGuid(),Name = "Conference3",ShortTopic = "Conference3", FullTopic = "Conference3",Date = DateOnly.FromDateTime(DateTime.Now),
+            new(){Id = Guid.NewGuid(),Name = "Conference3",Type = "offline",ShortTopic = "Conference3", FullTopic = "Conference3",Date = DateOnly.FromDateTime(DateTime.Now),
                 StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
                 Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"},
             
-            new(){Id = Guid.NewGuid(),Name = "Conference4",ShortTopic = "Conference4", FullTopic = "Conference4",Date = DateOnly.FromDateTime(DateTime.Now),
+            new(){Id = Guid.NewGuid(),Name = "Conference4",Type = "offline",ShortTopic = "Conference4", FullTopic = "Conference4",Date = DateOnly.FromDateTime(DateTime.Now),
                 StartTime = TimeOnly.FromDateTime(DateTime.Now), EndTime = TimeOnly.FromDateTime(DateTime.Now), Organizer = "Rut miit", 
                 Categories = {"Math","Chemistry","IT"}, City = "Moscow", Addres = "Obrazova 9"}
         };

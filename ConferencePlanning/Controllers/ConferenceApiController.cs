@@ -1,7 +1,7 @@
 ﻿using ConferencePlanning.Data;
 using ConferencePlanning.Data.Entities;
+using ConferencePlanning.DTO.ConferenceDto;
 // using ConferencePlanning.Data.Migrations;
-using ConferencePlanning.DTO;
 using ConferencePlanning.Services.ConferenceServices;
 using ConferencePlanning.Services.PhotosServices;
 using Microsoft.AspNetCore.Authorization;
@@ -37,7 +37,6 @@ public class ConferenceApiController:ControllerBase
     [HttpGet("getAllConferences")]
     public IActionResult GetConferences()
     {
-       
         return Ok( _service.GetAllConferences());
     }
 
@@ -48,7 +47,7 @@ public class ConferenceApiController:ControllerBase
 
         var photoName = await _service.GetPhotoName(conf.PhotoId);
         
-        var imageUrl = $"{_configuration["PathConferencePhoto"]}\\{photoName}";
+        var imageUrl = $"getConferencePhotoById{conf.Id}";
 
         var result = new
         {
@@ -57,6 +56,22 @@ public class ConferenceApiController:ControllerBase
         };
         return Ok(result);
     }
+    
+    [HttpGet("getConferenceWithSections")]
+    public async Task<ActionResult> GetConferenceWithSections(Guid id)
+    {
+        var result =await _service.GetConferenceWithSections(id);
+
+        return Ok(result);
+    }
+
+    [HttpGet("getUserConferences")]
+    public async Task<ActionResult> GetUserConferences(string id)
+    {
+        var conferences = await _service.GetUserConferences(id);
+        return Ok(conferences);
+    }
+    
     
     [HttpPost("addNewConference")]
     public async Task<ActionResult<Conference>> AddNewConference(ConferenceDto conferenceDto)
@@ -101,18 +116,5 @@ public class ConferenceApiController:ControllerBase
     
     
 
-    [HttpGet("getConferenceWithSections")]
-    public async Task<ActionResult> GetConferenceWithSections(Guid id)
-    {
-        var result =await _service.GetConferenceWithSections(id);
-
-        return Ok(result);
-    }
-
-    [HttpGet("getUserConference")]
-    public async Task<ActionResult> GetUserConference(string id)
-    {
-        var conferences = await _service.GetUserConference(id);
-        return Ok(conferences);
-    }
+    
 }

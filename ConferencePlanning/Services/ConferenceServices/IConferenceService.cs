@@ -1,11 +1,12 @@
 ﻿using ConferencePlanning.Data.Entities;
-using ConferencePlanning.DTO;
+using ConferencePlanning.DTO.ConferenceDto;
+
 
 namespace ConferencePlanning.Services.ConferenceServices;
 
 public interface IConferenceService
 {
-    IEnumerable<Conference> GetAllConferences();
+    Task<ICollection<ConferenceShortDto>> GetAllConferences();
 
     Task<Conference> GetConference(Guid id);
 
@@ -16,5 +17,5 @@ public interface IConferenceService
 
     public Task<Conference> GetConferenceWithSections(Guid id);
 
-    public Task<ICollection<ConferenceDto>> GetUserConference(string id);
+    public Task<ICollection<ConferenceShortDto>> GetUserConferences(string id);
 }
