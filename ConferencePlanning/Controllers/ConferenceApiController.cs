@@ -48,7 +48,7 @@ public class ConferenceApiController:ControllerBase
         var photoName = await _service.GetPhotoName(conf.PhotoId);
         
         var imageUrl = $"getConferencePhotoById{conf.Id}";
-
+        
         var result = new
         {
             conf,
@@ -74,11 +74,25 @@ public class ConferenceApiController:ControllerBase
     
     
     [HttpPost("addNewConference")]
-    public async Task<ActionResult<Conference>> AddNewConference(ConferenceDto conferenceDto)
+    public async Task<ActionResult> AddNewConference(ConferenceCreateDto conferenceCreateDto)
     {
-        var conference = await _service.AddNewConference(conferenceDto);
+        var conference = await _service.AddNewConference(conferenceCreateDto);
         
-        return Ok(conference);
+        var result = new
+        {
+            Id = conference.Id,
+            conferenceCreateDto
+        };
+        
+        return Ok(result);
+    }
+
+    [HttpPut("updateConference")]
+    public async Task<ActionResult> UpdateConference(ConferenceDto confDto)
+    {
+        var updateConf = await _service.UpdateConference(confDto);
+        
+        return Ok(updateConf);
     }
 
     [HttpPost("addNewConferenceWithImg")]
@@ -88,7 +102,7 @@ public class ConferenceApiController:ControllerBase
         var fileStream = new FileStream(fullPath, FileMode.Create);
         await conferenceWithImgDto.Img.CopyToAsync(fileStream);
         
-        var conference = await _service.AddNewConference(conferenceWithImgDto.ConferenceDto);
+        /*var conference = await _service.AddNewConference(conferenceWithImgDto.ConferenceDto);
         var photo = await _photosService.AddNewConferencePhoto(conference.Id,conferenceWithImgDto.Img.FileName);
 
         var imgUrl = $"api/photos/getConferencePhotoById{conference.PhotoId}";
@@ -96,8 +110,8 @@ public class ConferenceApiController:ControllerBase
         var result = new
         {
             conference, imgUrl
-        };
-        return Ok(result);
+        };*/
+        return Ok();
        
     }
     

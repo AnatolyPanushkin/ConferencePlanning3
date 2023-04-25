@@ -24,7 +24,6 @@ public class ConferenceService : IConferenceService
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    ShortTopic = c.ShortTopic,
                     Type = c.Type,
                     Date = c.Date,
                     ImgUrl = $"getConferencePhotoById{c.Id}"
@@ -42,15 +41,31 @@ public class ConferenceService : IConferenceService
         return result;
     }
 
-    public async Task<Conference> AddNewConference(ConferenceDto conferenceDto)
+    public async Task<Conference> AddNewConference(ConferenceCreateDto conferenceDto)
     {
-        var newConference = conferenceDto.MapConferenceDtoToConference();
-        newConference.Id = Guid.NewGuid();
-        
+        var newConference = new Conference
+        {
+            Id = Guid.NewGuid(),
+            Name = conferenceDto.Name,
+            Type = conferenceDto.Type,
+            Date = conferenceDto.Date
+        };
+
         _context.Conferences.Add(newConference);
         await _context.SaveChangesAsync();
 
         return newConference;
+    }
+
+    public async Task<Conference> UpdateConference(ConferenceDto confDto)
+    {
+        var updateConf = confDto.MapConferenceDtoToConference();
+        updateConf.Id = confDto.Id;
+        
+        _context.Conferences.Update(updateConf);
+        await _context.SaveChangesAsync();
+
+        return updateConf;
     }
 
     public async Task<bool> AddUser(Guid id, string userId)
@@ -94,7 +109,6 @@ public class ConferenceService : IConferenceService
             {
                 Id = c.Conference.Id,
                 Name = c.Conference.Name,
-                ShortTopic = c.Conference.ShortTopic,
                 Type = c.Conference.Type,
                 Date = c.Conference.Date,
                 ImgUrl = $"getConferencePhotoById{c.Conference.Id}"

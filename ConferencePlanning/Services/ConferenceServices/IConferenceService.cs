@@ -1,5 +1,6 @@
 ﻿using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO.ConferenceDto;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ConferencePlanning.Services.ConferenceServices;
@@ -10,7 +11,9 @@ public interface IConferenceService
 
     Task<Conference> GetConference(Guid id);
 
-    Task<Conference> AddNewConference(ConferenceDto conferenceDto);
+    Task<Conference> AddNewConference(ConferenceCreateDto conferenceDto);
+
+    Task<Conference> UpdateConference(ConferenceDto confDto);
 
     public Task<bool> AddUser(Guid id, string userId);
     public Task<string> GetPhotoName(Guid id);
