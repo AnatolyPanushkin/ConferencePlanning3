@@ -16,7 +16,7 @@ public static class ConferenceDtoToConference
             Addres = conferenceDto.Addres,
             City = conferenceDto.City,
             Type = conferenceDto.Type,
-            //Date = conferenceDto.Date,
+            Date = conferenceDto.Date,
             StartTime = conferenceDto.StartTime,
             EndTime = conferenceDto.EndTime,
             Organizer = conferenceDto.Organizer,

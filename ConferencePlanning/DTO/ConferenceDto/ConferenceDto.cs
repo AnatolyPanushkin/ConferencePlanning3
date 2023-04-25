@@ -1,4 +1,6 @@
-﻿namespace ConferencePlanning.DTO.ConferenceDto;
+﻿using System.Text.Json.Serialization;
+
+namespace ConferencePlanning.DTO.ConferenceDto;
 
 public class ConferenceDto
 {
@@ -11,7 +13,8 @@ public class ConferenceDto
     public string FullTopic { get; set; }
     public string Addres { get; set; }
     public string City { get; set; }
-    //public DateOnly Date { get; set; }
+    [JsonConverter(typeof(DateOnlyJsonConverter))]
+    public DateOnly Date { get; set; }
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }
     public string Organizer { get; set; }
