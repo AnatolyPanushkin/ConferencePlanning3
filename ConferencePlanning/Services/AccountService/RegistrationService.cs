@@ -17,6 +17,10 @@ public class RegistrationService:IRegistrationService
     {
         var moderator = new ApplicationUser
         {
+            UserName = moderatorRegisterDto.UserName,
+            UserSurname = moderatorRegisterDto.UserSurname,
+            Patronymic = moderatorRegisterDto.Patronymic,
+            Position = moderatorRegisterDto.Position,
             OrganizationName = moderatorRegisterDto.OrganizationName,
             Email = moderatorRegisterDto.Email,
             Role = "Moderator"
@@ -32,6 +36,9 @@ public class RegistrationService:IRegistrationService
             return new UserDto
             {
                 Id = moderator.Id,
+                Surname = moderator.UserSurname,
+                UserName = moderator.UserName,
+                OrganizationName = moderator.OrganizationName,
                 Token = token,
                 Role = moderator.Role
             };
@@ -46,6 +53,8 @@ public class RegistrationService:IRegistrationService
         {
             UserSurname = registerDto.UserSurname,
             UserName = registerDto.UserName,
+            Patronymic = registerDto.Patronymic,
+            Position = registerDto.Position,
             Email = registerDto.Email,
             Role = "User",
         };
@@ -58,9 +67,9 @@ public class RegistrationService:IRegistrationService
             return new UserDto
             {
                 Id = user.Id,
-                DisplayName = user.UserSurname,
-                Token = token,
+                Surname = user.UserSurname,
                 UserName = user.UserName,
+                Token = token,
                 Role = user.Role
             };
         }

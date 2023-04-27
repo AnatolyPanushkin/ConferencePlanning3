@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "u0se/1uAWmfIVtlq8NqkY3gMBUG7n4yW9S/oSDj/QLBq7UvsnwC2rGFppODMSu2gN6yJFsRC9s4Qx7wy+s12KA==",
+  "dgSpecHash": "h7Yttc9xK/BAHMVp2iRDoImO8hFt8LMYU5bG75k+agUuoO0aI2JL4VNtSh3RE1D8qZeSo41JO2AXA7Izhm+gpA==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\RiderProjects\\ConferencePlanning3\\ConferencePlanning\\ConferencePlanning.csproj",
   "expectedPackageFiles": [
@@ -39,6 +39,7 @@
     "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\npgsql\\7.0.1\\npgsql.7.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.1\\npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",

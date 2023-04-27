@@ -116,3 +116,4 @@ C:\Users\User\RiderProjects\ConferencePlanning3\ConferencePlanning\obj\Debug\net
 C:\Users\User\RiderProjects\ConferencePlanning3\ConferencePlanning\obj\Debug\net6.0\ConferencePlanning.pdb
 C:\Users\User\RiderProjects\ConferencePlanning3\ConferencePlanning\obj\Debug\net6.0\ConferencePlanning.genruntimeconfig.cache
 C:\Users\User\RiderProjects\ConferencePlanning3\ConferencePlanning\obj\Debug\net6.0\ref\ConferencePlanning.dll
+C:\Users\User\RiderProjects\ConferencePlanning3\ConferencePlanning\bin\Debug\net6.0\Newtonsoft.Json.dll

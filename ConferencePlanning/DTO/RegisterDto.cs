@@ -10,6 +10,12 @@ public class RegisterDto
     public string UserName { get; set; }
     
     [Required]
+    public string Patronymic { get; set; }
+    
+    [Required]
+    public string Position { get; set; }
+    
+    [Required]
     [EmailAddress]
     public string Email { get; set; }
     

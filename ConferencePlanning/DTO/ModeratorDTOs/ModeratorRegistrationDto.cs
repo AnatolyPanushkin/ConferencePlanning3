@@ -5,7 +5,16 @@ namespace ConferencePlanning.DTO;
 public class ModeratorRegistrationDto
 {
     [Required]
-    public string Id { get; set; }
+    public string UserSurname { get; set; }
+    
+    [Required]
+    public string UserName { get; set; }
+    
+    [Required]
+    public string Patronymic { get; set; }
+    
+    [Required]
+    public string Position { get; set; }
     
     [Required]
     public string OrganizationName { get; set; }

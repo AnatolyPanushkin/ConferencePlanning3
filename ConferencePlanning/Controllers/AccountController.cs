@@ -54,7 +54,7 @@ public class AccountController:ControllerBase
             return new UserDto
             {
                 Id = user.Id,
-                DisplayName = user.UserSurname,
+                Surname = user.UserSurname,
                 Token = token,
                 UserName = user.UserName,
                 Role = user.Role

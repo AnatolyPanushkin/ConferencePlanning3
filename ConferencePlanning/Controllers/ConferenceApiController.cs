@@ -35,9 +35,9 @@ public class ConferenceApiController:ControllerBase
   
     //[Authorize(Roles = "Admin")]
     [HttpGet("getAllConferences")]
-    public IActionResult GetConferences()
+    public async Task<ActionResult> GetConferences()
     {
-        return Ok( _service.GetAllConferences());
+        return Ok(await _service.GetAllConferences());
     }
 
     [HttpGet("getConferenceById")]
@@ -71,8 +71,15 @@ public class ConferenceApiController:ControllerBase
         var conferences = await _service.GetUserConferences(id);
         return Ok(conferences);
     }
-    
-    
+
+    [HttpGet("getPotentialParticipants")]
+    public async Task<ActionResult> GetPotentialParticipants(Guid confId)
+    {
+        var potential = await _service.GetConferenceQuestionnaire(confId);
+
+        return Ok(potential);
+    }
+
     [HttpPost("addNewConference")]
     public async Task<ActionResult> AddNewConference(ConferenceCreateDto conferenceCreateDto)
     {
@@ -127,8 +134,5 @@ public class ConferenceApiController:ControllerBase
 
         return BadRequest("Not added");
     }
-    
-    
-
     
 }

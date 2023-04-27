@@ -19,8 +19,11 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
     public DbSet<Photo> Photos { get; set; }
     
     public DbSet<Section> Sections { get; set; }
-
+    
+    public DbSet<Questionnaire> Questionnaires { get; set; }
     public DbSet<UsersConferences> UsersConferences { get; set; }
+    
+    public DbSet<PotentialParticipants> PotentialParticipants { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -87,8 +90,17 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
             entity.HasKey(source => new { source.UserId, source.ConferenceId });
         });
 
+        modelBuilder.Entity<ApplicationUser>(entity =>
+        {
+            entity.HasOne(u => u.Questionnaire)
+                .WithOne(q => q.ApplicationUser)
+                .HasForeignKey<Questionnaire>(q=>q.UserId);
+        });
 
-
+        modelBuilder.Entity<PotentialParticipants>(entity =>
+        {
+            entity.HasKey(source => new { source.UserId, source.ConferenceId });
+        });
     }
 }
 

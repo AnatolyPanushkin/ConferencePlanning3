@@ -1,5 +1,6 @@
 ﻿using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO.ConferenceDto;
+using ConferencePlanning.DTO.QuestionnaireDTOs;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -21,4 +22,6 @@ public interface IConferenceService
     public Task<Conference> GetConferenceWithSections(Guid id);
 
     public Task<ICollection<ConferenceShortDto>> GetUserConferences(string id);
+
+    public Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId);
 }

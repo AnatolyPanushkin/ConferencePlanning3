@@ -25,6 +25,7 @@ public class ApplicationUser:IdentityUser
     [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<UsersConferences>  UsersConferences{ get; set; }
     
+    public Questionnaire Questionnaire { get; set; }
     public Guid PhotoId { get; set; }
 
 }

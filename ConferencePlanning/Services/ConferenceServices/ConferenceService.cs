@@ -3,6 +3,7 @@ using ConferencePlanning.Data;
 using ConferencePlanning.Mappers;
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO.ConferenceDto;
+using ConferencePlanning.DTO.QuestionnaireDTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Services.ConferenceServices;
@@ -115,5 +116,23 @@ public class ConferenceService : IConferenceService
             }).ToListAsync();
         
         return conf;
+    }
+
+    public async Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId)
+    {
+        var questionnaires = await _context.PotentialParticipants.Where(p => p.ConferenceId == confId)
+            .Select(p => new ConferenceQuestionnaireDto
+            {
+                UserName = p.User.UserName,
+                UserSurname = p.User.UserSurname,
+                Position = p.User.Position,
+                DockladTheme = p.User.Questionnaire.DockladTheme,
+                ScientificDegree = p.User.Questionnaire.ScientificDegree,
+                Type = p.User.Questionnaire.Type,
+                UserId = p.UserId,
+                ConferenceId = p.ConferenceId
+            }).ToListAsync();
+
+        return questionnaires;
     }
 }
