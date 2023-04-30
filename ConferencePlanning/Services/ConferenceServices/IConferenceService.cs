@@ -8,7 +8,7 @@ namespace ConferencePlanning.Services.ConferenceServices;
 
 public interface IConferenceService
 {
-    Task<ICollection<ConferenceShortDto>> GetAllConferences();
+    Task<ICollection<ConferenceDto>> GetAllConferences();
 
     Task<Conference> GetConference(Guid id);
 

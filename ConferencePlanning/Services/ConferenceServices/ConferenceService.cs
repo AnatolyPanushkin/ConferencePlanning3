@@ -18,15 +18,19 @@ public class ConferenceService : IConferenceService
         _context = context;
         _configuration = configuration;
     }
-    public async Task<ICollection<ConferenceShortDto>> GetAllConferences()
+    public async Task<ICollection<ConferenceDto>> GetAllConferences()
     {
         var conferences = await _context.Conferences
-            .Select(c => new ConferenceShortDto
+            .Select(c => new ConferenceDto
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Type = c.Type,
                     Date = c.Date,
+                    Categories = c.Categories,
+                    StartTime = c.StartTime,
+                    EndTime = c.EndTime,
+                    Addres = c.Addres,
                     ImgUrl = $"getConferencePhotoById{c.Id}"
                 })
             .ToListAsync();
