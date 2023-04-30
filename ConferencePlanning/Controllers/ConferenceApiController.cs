@@ -45,6 +45,7 @@ public class ConferenceApiController:ControllerBase
     {
         var conf = await _service.GetConference(id);
 
+        if(conf.PhotoId!=Guid.Empty){}
         var photoName = await _service.GetPhotoName(conf.PhotoId);
         
         var imageUrl = $"getConferencePhotoById{conf.Id}";

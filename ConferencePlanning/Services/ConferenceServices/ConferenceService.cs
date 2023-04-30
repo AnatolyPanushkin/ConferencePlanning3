@@ -49,7 +49,8 @@ public class ConferenceService : IConferenceService
             Id = Guid.NewGuid(),
             Name = conferenceDto.Name,
             Type = conferenceDto.Type,
-            Date = conferenceDto.Date
+            Date = conferenceDto.Date,
+            ModeratorId = conferenceDto.ModeratorId
         };
 
         _context.Conferences.Add(newConference);

@@ -13,7 +13,8 @@ public class ConferenceDto
     public string FullTopic { get; set; }
     public string Addres { get; set; }
     public string City { get; set; }
-      
+    
+    [JsonConverter(typeof(DateOnlyJsonConverter))]
     public DateOnly Date { get; set; }
     public TimeOnly StartTime { get; set; }
     public TimeOnly EndTime { get; set; }

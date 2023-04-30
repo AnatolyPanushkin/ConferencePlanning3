@@ -20,7 +20,7 @@ public class Conference
     public List<string>? Categories { get; set; } = new List<string>();
     public Guid PhotoId { get; set; }
     
-    
+    public string? ModeratorId { get; set; }
     public ICollection<Section> Sections { get; set; } = new List<Section>();
     
     public List<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
