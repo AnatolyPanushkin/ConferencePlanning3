@@ -81,6 +81,14 @@ public class ConferenceApiController:ControllerBase
         return Ok(potential);
     }
 
+    [HttpGet("getModeratorConferences")]
+    public async Task<ActionResult> GetModeratorConferences(string moderatorId)
+    {
+        var moderatorConf= await _service.GetModeratorConferences(moderatorId);
+
+        return Ok(moderatorConf);
+    }
+
     [HttpPost("addNewConference")]
     public async Task<ActionResult> AddNewConference(ConferenceCreateDto conferenceCreateDto)
     {

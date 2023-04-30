@@ -31,6 +31,7 @@ public class ConferenceService : IConferenceService
                     StartTime = c.StartTime,
                     EndTime = c.EndTime,
                     Addres = c.Addres,
+                    ModeratorId = c.ModeratorId,
                     ImgUrl = $"getConferencePhotoById{c.Id}"
                 })
             .ToListAsync();
@@ -123,6 +124,20 @@ public class ConferenceService : IConferenceService
         return conf;
     }
 
+    public async Task<ICollection<ConferenceShortDto>> GetModeratorConferences(string id)
+    {
+        var conf = await _context.Conferences.Where(c => c.ModeratorId.Equals(id))
+            .Select(c => new ConferenceShortDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Type = c.Type,
+                Date = c.Date,
+                ImgUrl = $"getConferencePhotoById{c.Id}"
+            }).ToListAsync();
+        
+        return conf;
+    }
     public async Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId)
     {
         var questionnaires = await _context.PotentialParticipants.Where(p => p.ConferenceId == confId)

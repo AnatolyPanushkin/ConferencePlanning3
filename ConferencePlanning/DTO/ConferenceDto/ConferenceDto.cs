@@ -20,6 +20,7 @@ public class ConferenceDto
     public TimeOnly? EndTime { get; set; }
     public string Organizer { get; set; }
 
+    public string ModeratorId { get; set; }
     public string ImgUrl { get; set; }
     public List<string> Categories { get; set; } = new List<string>();
     

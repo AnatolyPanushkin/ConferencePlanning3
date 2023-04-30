@@ -23,5 +23,7 @@ public interface IConferenceService
 
     public Task<ICollection<ConferenceShortDto>> GetUserConferences(string id);
 
+    public Task<ICollection<ConferenceShortDto>> GetModeratorConferences(string id);
+
     public Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId);
 }

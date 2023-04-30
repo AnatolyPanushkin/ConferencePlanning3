@@ -32,8 +32,8 @@ public class ConferencePlanningContext:IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        /*modelBuilder.HasPostgresExtension("adminpack")
-            .HasAnnotation("Relational:Collation", "Russian_Russia.1251");*/
+        modelBuilder.HasPostgresExtension("adminpack")
+            .HasAnnotation("Relational:Collation", "Russian_Russia.1251");
 
         base.OnModelCreating(modelBuilder);
 
