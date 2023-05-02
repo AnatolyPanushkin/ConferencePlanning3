@@ -17,10 +17,10 @@ public class RegistrationService:IRegistrationService
     {
         var moderator = new ApplicationUser
         {
-            UserName = moderatorRegisterDto.UserName,
-            UserSurname = moderatorRegisterDto.UserSurname,
-            Patronymic = moderatorRegisterDto.Patronymic,
-            Position = moderatorRegisterDto.Position,
+            UserName = moderatorRegisterDto.OrganizationName,
+            UserSurname = moderatorRegisterDto.OrganizationName,
+            Patronymic = moderatorRegisterDto.OrganizationName,
+            Position = moderatorRegisterDto.OrganizationName,
             OrganizationName = moderatorRegisterDto.OrganizationName,
             Email = moderatorRegisterDto.Email,
             Role = "Moderator"

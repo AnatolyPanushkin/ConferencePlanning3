@@ -44,10 +44,40 @@ public class ModeratorController:ControllerBase
 
         var updateModerator = await _context.Users.FirstOrDefaultAsync(usr => usr.Id.Equals(moderatorDto.Id));
 
-        updateModerator.OrganizationName = moderatorDto.OrganizationName;
-        updateModerator.Email = moderatorDto.Email;
-        updateModerator.Position = moderatorDto.Position;
+        if (updateModerator!=null)
+        {
+            updateModerator.OrganizationName = moderatorDto.OrganizationName;
+            updateModerator.Email = moderatorDto.Email;
+            updateModerator.Position = moderatorDto.Position;
+
+            if (moderatorDto.UserName!=null)
+            {
+                updateModerator.UserName = moderatorDto.UserName;
+            }
+            
+            if (moderatorDto.UserSurname!=null)
+            {
+                updateModerator.UserSurname = moderatorDto.UserSurname;
+            }
+            
+            if (moderatorDto.Patronymic!=null)
+            {
+                updateModerator.Patronymic = moderatorDto.Patronymic;
+            }
+        }
         
+        /*var updateModerator = new ApplicationUser
+        {
+            Id = moderatorDto.Id,
+            UserName = moderatorDto.UserName,
+            UserSurname = moderatorDto.UserSurname,
+            Patronymic = moderatorDto.Patronymic,
+            OrganizationName = moderatorDto.OrganizationName,
+            Position = moderatorDto.Position,
+            Email = moderatorDto.Email
+        };
+        
+        _context.Users.Update(updateModerator);*/
         await _context.SaveChangesAsync();
 
         return Ok(moderatorDto);

@@ -4,7 +4,7 @@ namespace ConferencePlanning.DTO;
 
 public class ModeratorRegistrationDto
 {
-    [Required]
+    /*[Required]
     public string UserSurname { get; set; }
     
     [Required]
@@ -14,7 +14,7 @@ public class ModeratorRegistrationDto
     public string Patronymic { get; set; }
     
     [Required]
-    public string Position { get; set; }
+    public string Position { get; set; }*/
     
     [Required]
     public string OrganizationName { get; set; }
