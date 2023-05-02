@@ -19,6 +19,7 @@ public class SectionController : ControllerBase
     [HttpPost("addSections")]
     public async Task<ActionResult> AddSections(ICollection<SectionDto> sections, Guid ConferenceId)
     {
+        var conference = _context.Conferences.FirstOrDefault(conf => conf.Id == ConferenceId);
         foreach (var section in sections)
         {
             var newSection = new Section
@@ -26,7 +27,8 @@ public class SectionController : ControllerBase
                 Id = new Guid(),
                 Name = section.Name,
                 StartTime = section.StartTime,
-                EndTime = section.EndTime
+                EndTime = section.EndTime,
+                Conference = conference
             };
             var result = await _context.Sections.AddAsync(newSection);
         }
