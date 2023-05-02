@@ -26,4 +26,6 @@ public interface IConferenceService
     public Task<ICollection<ConferenceShortDto>> GetModeratorConferences(string id);
 
     public Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId);
+
+    public Task<ConferenceDto> DeleteConference(Guid confId);
 }

@@ -143,5 +143,12 @@ public class ConferenceApiController:ControllerBase
 
         return BadRequest("Not added");
     }
-    
+
+    [HttpDelete("DeleteConference")]
+    public async Task<ActionResult> DeleteConference(Guid confId)
+    {
+        var deleteConf = await _service.DeleteConference(confId);
+
+        return Ok(deleteConf);
+    }
 }

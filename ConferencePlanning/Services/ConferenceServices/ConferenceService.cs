@@ -155,4 +155,39 @@ public class ConferenceService : IConferenceService
 
         return questionnaires;
     }
+
+    public async Task<ConferenceDto> DeleteConference(Guid confId)
+    {
+        var conf = await _context.Conferences.FirstOrDefaultAsync(c => c.Id == confId);
+
+        if (conf == null)
+        {
+            return null;
+        }
+
+        var communicationUsers = await _context.UsersConferences.Where(uc => uc.ConferenceId == confId)
+            .Select(uc => uc).ToListAsync();
+
+        foreach (var uc in communicationUsers)
+        {
+            _context.UsersConferences.Remove(uc);
+        }
+        
+        var communicationParticipants = await _context.PotentialParticipants.Where(pp => pp.ConferenceId == confId)
+            .Select(pp => pp).ToListAsync();
+        foreach (var pp in communicationParticipants)
+        {
+            _context.PotentialParticipants.Remove(pp);
+        }
+
+        _context.Conferences.Remove(conf);
+        await _context.SaveChangesAsync();
+
+        return new ConferenceDto
+        {  
+            Name = conf.Name,
+            Type = conf.Type
+        };
+    }
+    
 }
