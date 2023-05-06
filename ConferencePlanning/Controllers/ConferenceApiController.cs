@@ -45,17 +45,22 @@ public class ConferenceApiController:ControllerBase
     {
         var conf = await _service.GetConference(id);
 
-        if(conf.PhotoId!=Guid.Empty){}
-        var photoName = await _service.GetPhotoName(conf.PhotoId);
+        //if (conf.PhotoId.ToString() != null)
         
-        var imageUrl = $"getConferencePhotoById{conf.Id}";
+            //var photoName = await _service.GetPhotoName(conf.PhotoId);
+
+            //var imageUrl = $"getConferencePhotoById{conf.Id}";
+
+            var result = new
+            {
+                conf
+            };
+            return Ok(result);
         
-        var result = new
+        /*else
         {
-            conf,
-            imageUrl
-        };
-        return Ok(result);
+            return Ok(conf);
+        }*/
     }
     
     [HttpGet("getConferenceWithSections")]
@@ -96,7 +101,7 @@ public class ConferenceApiController:ControllerBase
         
         var result = new
         {
-            Id = conference.Id,
+            Identity = conference.Id,
             conferenceCreateDto
         };
         

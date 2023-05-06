@@ -18,7 +18,7 @@ public class ConferenceDto
     public DateOnly Date { get; set; }
     public TimeOnly? StartTime { get; set; }
     public TimeOnly? EndTime { get; set; }
-    public string Organizer { get; set; }
+    //public string Organizer { get; set; }
 
     public string ModeratorId { get; set; }
     public string ImgUrl { get; set; }

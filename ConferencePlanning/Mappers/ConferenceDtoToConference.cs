@@ -19,7 +19,8 @@ public static class ConferenceDtoToConference
             Date = conferenceDto.Date,
             StartTime = conferenceDto.StartTime,
             EndTime = conferenceDto.EndTime,
-            Organizer = conferenceDto.Organizer,
+            //Organizer = conferenceDto.Organizer,
+            ModeratorId = conferenceDto.ModeratorId,
             Categories = conferenceDto.Categories
         };
 
