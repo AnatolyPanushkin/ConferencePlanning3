@@ -30,9 +30,13 @@ public class ModeratorController:ControllerBase
         var result = new ModeratorDto
         {   
             Id = moderator.Id,
+            UserName = moderator.UserName,
+            UserSurname = moderator.UserSurname,
+            Patronymic = moderator.Patronymic,
             OrganizationName = moderator.OrganizationName,
             Position = moderator.Position,
-            Email = moderator.Email
+            Email = moderator.Email,
+            PhoneNumber = moderator.PhoneNumber
         };
         
         return Ok(result);
@@ -50,6 +54,11 @@ public class ModeratorController:ControllerBase
             updateModerator.Email = moderatorDto.Email;
             updateModerator.Position = moderatorDto.Position;
 
+            if (moderatorDto.PhoneNumber!=null)
+            {
+                updateModerator.PhoneNumber = moderatorDto.PhoneNumber;
+            }
+            
             if (moderatorDto.UserName!=null)
             {
                 updateModerator.UserName = moderatorDto.UserName;
