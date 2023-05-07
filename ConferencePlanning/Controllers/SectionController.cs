@@ -2,6 +2,7 @@
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Controllers;
 
@@ -14,6 +15,21 @@ public class SectionController : ControllerBase
     public SectionController(ConferencePlanningContext context)
     {
         _context = context;
+    }
+
+    [HttpGet("getSections")]
+    public async Task<ActionResult> GetSections(Guid confId)
+    {
+        var sections = await _context.Sections.Where(s => s.Conference.Id == confId)
+            .Select(s => new Section
+            {
+                Id = s.Id,
+                Name = s.Name,
+                StartTime = s.StartTime,
+                EndTime = s.EndTime
+            }).ToListAsync();
+
+        return Ok(sections);
     }
 
     [HttpPost("addSections")]
@@ -56,4 +72,5 @@ public class SectionController : ControllerBase
 
         return Ok(sectionDto);
     }
+    
 }

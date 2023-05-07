@@ -101,7 +101,7 @@ public class ConferenceApiController:ControllerBase
         
         var result = new
         {
-            Identity = conference.Id,
+            Id = conference.Id,
             conferenceCreateDto
         };
         
