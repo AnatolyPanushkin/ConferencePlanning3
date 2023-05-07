@@ -59,18 +59,18 @@ public class SectionController : ControllerBase
     {
         var conference = _context.Conferences.FirstOrDefault(conf => conf.Id == conferenceId);
         
-        var result = await _context.Sections.AddAsync(
-            new Section
+        var section = new Section
             {
                 Id = new Guid(),
                 Name = sectionDto.Name,
                 StartTime = sectionDto.StartTime,
                 EndTime = sectionDto.EndTime,
                 Conference = conference
-            });
+            };
+        await _context.Sections.AddAsync(section);
         await _context.SaveChangesAsync();
-
-        return Ok(sectionDto);
+        
+        return Ok(section);
     }
 
     [HttpPut("updateSections")]
