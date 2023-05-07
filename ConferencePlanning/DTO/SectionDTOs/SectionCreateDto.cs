@@ -1,6 +1,6 @@
-﻿namespace ConferencePlanning.DTO;
+﻿namespace ConferencePlanning.DTO.SectionDTOs;
 
-public class SectionDto
+public class SectionCreateDto
 {
     public string Name { get; set; }
     
