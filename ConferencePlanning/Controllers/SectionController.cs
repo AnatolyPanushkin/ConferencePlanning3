@@ -94,4 +94,17 @@ public class SectionController : ControllerBase
 
         return Ok(sections);
     }
+    
+    [HttpDelete("deleteSection")]
+    public async Task<ActionResult> DeleteSections(Guid secId)
+    {
+        var section = _context.Sections.FirstOrDefault(s => s.Id == secId);
+
+        
+        _context.Sections.Remove(section);
+        
+        await _context.SaveChangesAsync();
+
+        return Ok(section);
+    }
 }
