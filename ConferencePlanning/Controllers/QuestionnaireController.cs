@@ -19,6 +19,18 @@ public class QuestionnaireController:ControllerBase
         _context = context;
     }
 
+    [HttpGet("getQuestionnaireByUserId")]
+    public async Task<ActionResult> GetQuestionnaireByUserId(string userId)
+    {
+        var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(q => q.UserId.Equals(userId));
+
+        if (questionnaire!=null)
+        {
+            return Ok(questionnaire);
+        }
+
+        return BadRequest("Questionnaire is nor exist");
+    }
 
     [HttpPost("AddNewQuestionnaire")]
     public async Task<ActionResult> AddNewQuestionnaire(QuestionnaireDto questionnaireDto)
@@ -40,6 +52,35 @@ public class QuestionnaireController:ControllerBase
         return Ok(questionnaire);
     }
 
+    [HttpPost("changeStatus")]
+    public async Task<ActionResult> ChangeStatus(Guid quesId, string status)
+    {
+        var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(q => q.Id == quesId);
+
+        if (questionnaire!=null)
+        {
+            if (status.Equals("Accepted"))
+            {
+                questionnaire.Status = StatusValue.Accepted;
+                
+            }
+            else if (status.Equals("NotAccepted"))
+            {
+                questionnaire.Status = StatusValue.NotAccepted;
+            }
+            else
+            {
+                return BadRequest("Incorrect value of status");
+            }
+            
+            _context.Questionnaires.Update(questionnaire);
+        }
+        
+        await _context.SaveChangesAsync();
+
+        return Ok("Status was changed");
+    }
+
     [HttpDelete("deletePotentialParticipant")]
     public async Task<ActionResult> DeletePotentialParticipant(string userId)
     {
@@ -58,6 +99,8 @@ public class QuestionnaireController:ControllerBase
 
         return BadRequest("Potential participant with this Id is not exist");
     }
+    
+    
 }
 
 

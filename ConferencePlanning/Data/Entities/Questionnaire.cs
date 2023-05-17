@@ -1,5 +1,11 @@
-﻿namespace ConferencePlanning.Data.Entities;
+﻿ 
+namespace ConferencePlanning.Data.Entities;
 
+public enum StatusValue
+{
+    Accepted,
+    NotAccepted
+}
 public class Questionnaire
 {
     public Guid Id { get; set; }
@@ -12,4 +18,6 @@ public class Questionnaire
     
     public string UserId { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
+
+    public StatusValue Status { get; set; }
 }
