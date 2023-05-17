@@ -2,6 +2,7 @@
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO.QuestionnaireDTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Controllers;
 
@@ -38,4 +39,26 @@ public class QuestionnaireController:ControllerBase
         
         return Ok(questionnaire);
     }
+
+    [HttpDelete("deletePotentialParticipant")]
+    public async Task<ActionResult> DeletePotentialParticipant(string userId)
+    {
+        var potentialParticipant =
+            await _context.PotentialParticipants.FirstOrDefaultAsync(u => u.UserId.Equals(userId));
+
+        if (potentialParticipant!=null)
+        {
+           var deleteParticipant =
+               _context.PotentialParticipants.Remove(potentialParticipant).Entity;
+
+           await _context.SaveChangesAsync();
+           
+           return Ok(deleteParticipant);
+        }
+
+        return BadRequest("Potential participant with this Id is not exist");
+    }
 }
+
+
+    
