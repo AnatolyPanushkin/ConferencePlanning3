@@ -12,7 +12,7 @@ public class ConferenceQuestionnaireDto
     
     public string ScientificDegree { get; set; }
     
-    public bool Type { get; set; }
+    public string Type { get; set; }
     
     public string UserId { get; set; }
     

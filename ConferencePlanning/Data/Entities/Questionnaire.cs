@@ -14,7 +14,7 @@ public class Questionnaire
     
     public string ScientificDegree { get; set; }
     
-    public bool Type { get; set; }
+    public string Type { get; set; }
     
     public string UserId { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
