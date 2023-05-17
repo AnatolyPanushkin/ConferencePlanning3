@@ -9,11 +9,11 @@ public class RegisterDto
     [Required]
     public string UserName { get; set; }
     
-    [Required]
+    /*[Required]
     public string Patronymic { get; set; }
     
     [Required]
-    public string Position { get; set; }
+    public string Position { get; set; }*/
     
     [Required]
     [EmailAddress]

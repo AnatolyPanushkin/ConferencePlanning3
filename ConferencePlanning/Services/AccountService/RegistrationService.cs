@@ -53,8 +53,6 @@ public class RegistrationService:IRegistrationService
         {
             UserSurname = registerDto.UserSurname,
             UserName = registerDto.UserName,
-            Patronymic = registerDto.Patronymic,
-            Position = registerDto.Position,
             Email = registerDto.Email,
             Role = "User",
         };
