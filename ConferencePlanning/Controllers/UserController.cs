@@ -38,18 +38,25 @@ public class UserController:ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("updateModerator")]
-    public async Task<ActionResult> UpdateModerator(ModeratorEditDto moderatorDto)
+    [HttpPut("updateUser")]
+    public async Task<ActionResult> UpdateUser(UpdateUserDto updateUserDto)
     {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(updateUserDto.Id));
 
-        var updateModerator = await _context.Users.FirstOrDefaultAsync(usr => usr.Id.Equals(moderatorDto.Id));
+        if (user!=null)
+        {
+            user.UserName = updateUserDto.UserName;
+            user.UserSurname = updateUserDto.UserSurname;
+            user.Patronymic = updateUserDto.Patronymic;
+            user.Position = updateUserDto.Position;
+            user.OrganizationName = updateUserDto.OrganizationName;
+            
+            _context.Users.Update(user);
+        }
 
-        updateModerator.OrganizationName = moderatorDto.OrganizationName;
-        updateModerator.Email = moderatorDto.Email;
-        
         await _context.SaveChangesAsync();
 
-        return Ok(moderatorDto);
+        return Ok(updateUserDto);
     }
     
 }
