@@ -34,16 +34,28 @@ public class PhotoController:ControllerBase
         return Ok(photo);
     }
 
-    [HttpGet("getConferencePhotoById{confId}")]
+    /*[HttpGet("getConferencePhotoById{confId}")]
     public async Task<ActionResult> GetConferencePhotoById(Guid confId)
     {
         var photo =await _service.GetPhotoName(confId);
         
         var fullPath = $"{_configuration["PathConferencePhoto"]}\\{photo}";
+        var t = HttpContext.Response.SendFileAsync(fullPath);
         
         return Ok(HttpContext.Response.SendFileAsync(fullPath));
+    }*/
+    
+    [HttpGet("getConferencePhotoById{confId}")]
+    public async Task<IActionResult> GetConferencePhotoById(Guid confId)
+    {
+        var photo =await _service.GetPhotoName(confId);
+        
+        var fullPath = $"{_configuration["PathConferencePhoto"]}\\{photo}";
+        
+        return PhysicalFile(fullPath,"image/png");
     }
-
+    
+    
     [HttpPost("addNewUserPhotoById{userId}")]
     public async Task<ActionResult> AddNewUserPhotoById(string id, IFormFile formFile)
     {

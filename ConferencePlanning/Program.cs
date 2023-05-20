@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,19 +73,25 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("CorsPolicy");
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider("C:\\Users\\User\\RiderProjects\\ConferencePlanning3\\ConferencePlanning\\ImgFiles\\ConferencesImg"),
+    RequestPath = "/ConfImg"
+});
+
+//app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-/*app.UseCors(options =>
+app.UseCors(options =>
 {
     options.AllowAnyMethod()
         .AllowAnyHeader()
         .AllowAnyOrigin()
         .Build();
-});*/
+});
 
 app.MapControllers();
 
