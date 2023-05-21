@@ -2,6 +2,7 @@
 using ConferencePlanning.Data.Entities;
 using ConferencePlanning.DTO.QuestionnaireDTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanning.Controllers;
@@ -13,6 +14,9 @@ public class QuestionnaireController:ControllerBase
 {
     
     private readonly ConferencePlanningContext _context;
+    private const string SIGNALR_HUB_URL = "https://localhost:7215/hub";
+    private static HubConnection hub;
+
 
     public QuestionnaireController(ConferencePlanningContext context)
     {
@@ -59,10 +63,13 @@ public class QuestionnaireController:ControllerBase
 
         if (questionnaire!=null)
         {
+            hub = new HubConnectionBuilder().WithUrl(SIGNALR_HUB_URL).Build();
+            await hub.StartAsync();
+            
             if (status.Equals("Accepted"))
             {
                 questionnaire.Status = StatusValue.Accepted;
-                
+                await hub.SendAsync("NotifyUser", "Conference_Notifier", StatusValue.Accepted.ToString());
             }
             else if (status.Equals("NotAccepted"))
             {

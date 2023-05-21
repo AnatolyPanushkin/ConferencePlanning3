@@ -1,6 +1,7 @@
 using System.Net;
 using ConferencePlanning.Data;
 using ConferencePlanning.Data.Entities;
+using ConferencePlanning.Hubs;
 using ConferencePlanning.IdentityServices;
 using ConferencePlanning.Services.AccountService;
 using ConferencePlanning.Services.ConferenceServices;
@@ -38,6 +39,7 @@ builder.Services.AddCors(opt =>
     });
 });
 
+builder.Services.AddSignalR();
 builder.Services.AddScoped<IConferenceService, ConferenceService>();
 builder.Services.AddScoped<IPhotosService, PhotosService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
@@ -96,3 +98,6 @@ app.UseCors(options =>
 app.MapControllers();
 
 app.Run();
+
+app.UseEndpoints(endpoint=>
+    endpoint.MapHub<ConferenceHub>("/hub"));
