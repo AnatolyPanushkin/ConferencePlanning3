@@ -150,7 +150,8 @@ public class ConferenceService : IConferenceService
                 ScientificDegree = p.User.Questionnaire.ScientificDegree,
                 Type = p.User.Questionnaire.Type,
                 UserId = p.UserId,
-                ConferenceId = p.ConferenceId
+                ConferenceId = p.ConferenceId,
+                Status = p.User.Questionnaire.Status.ToString()
             }).ToListAsync();
 
         return questionnaires;

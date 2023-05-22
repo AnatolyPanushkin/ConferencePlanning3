@@ -17,4 +17,6 @@ public class ConferenceQuestionnaireDto
     public string UserId { get; set; }
     
     public Guid ConferenceId { get; set; }
+    
+    public string Status { get; set; }
 }

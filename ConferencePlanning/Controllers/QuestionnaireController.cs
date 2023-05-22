@@ -14,13 +14,15 @@ public class QuestionnaireController:ControllerBase
 {
     
     private readonly ConferencePlanningContext _context;
-    private const string SIGNALR_HUB_URL = "https://localhost:7215/hub";
+    private const string SIGNALR_HUB_URL = "http://localhost:5215/hub";
     private static HubConnection hub;
-
-
+    
+    
     public QuestionnaireController(ConferencePlanningContext context)
     {
         _context = context;
+        hub = new HubConnectionBuilder().WithUrl(SIGNALR_HUB_URL).Build();
+        hub.StartAsync();
     }
 
     [HttpGet("getQuestionnaireByUserId")]
@@ -59,13 +61,11 @@ public class QuestionnaireController:ControllerBase
     [HttpPost("changeStatus")]
     public async Task<ActionResult> ChangeStatus(Guid quesId, string status)
     {
+       
         var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(q => q.Id == quesId);
 
         if (questionnaire!=null)
         {
-            hub = new HubConnectionBuilder().WithUrl(SIGNALR_HUB_URL).Build();
-            await hub.StartAsync();
-            
             if (status.Equals("Accepted"))
             {
                 questionnaire.Status = StatusValue.Accepted;

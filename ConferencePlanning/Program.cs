@@ -31,14 +31,26 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ConferencePlanningContext>(options=>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ConferencePlanningContext")));
 
-builder.Services.AddCors(opt =>
+/*builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy",policy =>
     {
         policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:3000");
     });
-});
+});*/
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(bdr =>
+    {
+        bdr
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+builder.Services.AddRouting();
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IConferenceService, ConferenceService>();
 builder.Services.AddScoped<IPhotosService, PhotosService>();
@@ -87,17 +99,27 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseCors(options =>
+/*app.UseCors(options =>
 {
     options.AllowAnyMethod()
         .AllowAnyHeader()
         .AllowAnyOrigin()
         .Build();
-});
+});*/
 
 app.MapControllers();
 
-app.Run();
+app.UseRouting();
 
-app.UseEndpoints(endpoint=>
-    endpoint.MapHub<ConferenceHub>("/hub"));
+app.UseCors();
+
+/*app.UseEndpoints(endpoint => { 
+    endpoint.MapHub<ConferenceHub>("/hub");
+    endpoint.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});*/
+
+app.MapHub<ConferenceHub>("/hub");
+
+app.Run();
