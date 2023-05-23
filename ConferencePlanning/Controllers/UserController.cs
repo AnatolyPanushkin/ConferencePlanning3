@@ -26,16 +26,8 @@ public class UserController:ControllerBase
         {
             return BadRequest("moderator not exist");
         }
-
-        var result = new ApplicationUser
-        {   
-            Id = user.Id,
-            Email = user.Email,
-            UserName = user.UserName,
-            UserSurname = user.UserSurname
-        };
         
-        return Ok(result);
+        return Ok(user);
     }
 
     [HttpPut("updateUser")]
