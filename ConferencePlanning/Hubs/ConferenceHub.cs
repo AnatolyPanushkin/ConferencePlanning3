@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using ConferencePlanning.DTO;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ConferencePlanning.Hubs;
 

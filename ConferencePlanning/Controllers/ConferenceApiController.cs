@@ -62,6 +62,18 @@ public class ConferenceApiController:ControllerBase
             return Ok(conf);
         }*/
     }
+
+    [HttpGet("getUsers")]
+    public async Task<ActionResult> GetUsers(Guid confId)
+    {
+        var users = await _service.GetUsers(confId);
+        if (users!=null)
+        {
+            return Ok(users);
+        }
+
+        return BadRequest("No users in conference");
+    }
     
     [HttpGet("getConferenceWithSections")]
     public async Task<ActionResult> GetConferenceWithSections(Guid id)

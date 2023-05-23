@@ -28,4 +28,6 @@ public interface IConferenceService
     public Task<ICollection<ConferenceQuestionnaireDto>> GetConferenceQuestionnaire(Guid confId);
 
     public Task<ConferenceDto> DeleteConference(Guid confId);
+
+    public Task<List<ApplicationUser>> GetUsers(Guid confId);
 }

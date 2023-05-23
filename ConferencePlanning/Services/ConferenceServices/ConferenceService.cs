@@ -190,5 +190,13 @@ public class ConferenceService : IConferenceService
             Type = conf.Type
         };
     }
-    
+
+    public async Task<List<ApplicationUser>> GetUsers(Guid confId)
+    {
+        /*var conf = await _context.Conferences.Include(c => c.UsersConferences)
+            .FirstOrDefaultAsync(c => c.Id == confId);*/
+        var users = await _context.UsersConferences.Where(uc => uc.ConferenceId == confId)
+            .Select(uc => uc.User).ToListAsync();
+        return users;
+    }
 }

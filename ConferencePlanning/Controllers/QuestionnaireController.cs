@@ -1,5 +1,6 @@
 ﻿using ConferencePlanning.Data;
 using ConferencePlanning.Data.Entities;
+using ConferencePlanning.DTO;
 using ConferencePlanning.DTO.QuestionnaireDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -63,13 +64,22 @@ public class QuestionnaireController:ControllerBase
     {
        
         var questionnaire = await _context.Questionnaires.FirstOrDefaultAsync(q => q.Id == quesId);
-
+        
         if (questionnaire!=null)
         {
+            var potentialParticipants = await _context.PotentialParticipants.Include(pp=>pp.Conference).FirstOrDefaultAsync(
+                pp => pp.UserId.Equals(questionnaire.UserId));
+            
             if (status.Equals("Accepted"))
             {
                 questionnaire.Status = StatusValue.Accepted;
-                await hub.SendAsync("NotifyUser", "Conference_Notifier", StatusValue.Accepted.ToString());
+                
+                var message = $"{questionnaire.Status.ToString()}" +
+                              $"{potentialParticipants.Conference.Name}" +
+                              $"{potentialParticipants.Conference.Date.ToString()}" +
+                              $"{questionnaire.Type}";
+                
+                await hub.SendAsync("NotifyUser", "Conference_Notifier", message);
             }
             else if (status.Equals("NotAccepted"))
             {
