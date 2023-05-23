@@ -72,30 +72,50 @@ public class QuestionnaireController:ControllerBase
             
             if (status.Equals("Accepted"))
             {
+                //Change status of questionnaire
                 questionnaire.Status = StatusValue.Accepted;
                 
+                _context.Questionnaires.Update(questionnaire);
+                
+                //Send notification
                 var message = $"{questionnaire.Status.ToString()}" +
-                              $"{potentialParticipants.Conference.Name}" +
-                              $"{potentialParticipants.Conference.Date.ToString()}" +
-                              $"{questionnaire.Type}";
+                                  $"{potentialParticipants.Conference.Name}" +
+                                  $"{potentialParticipants.Conference.Date.ToString()}" +
+                                  $"{questionnaire.Type}";
                 
                 await hub.SendAsync("NotifyUser", "Conference_Notifier", message);
+                
+                //add user into list of participants
+                _context.UsersConferences.Add(new() 
+                   { 
+                       UserId = potentialParticipants.UserId,
+                       ConferenceId = potentialParticipants.ConferenceId
+                   });
+                
+                //remove user from list of potential participants
+                _context.PotentialParticipants.Remove(potentialParticipants);
+
+                await _context.SaveChangesAsync();
             }
+            
             else if (status.Equals("NotAccepted"))
             {
                 questionnaire.Status = StatusValue.NotAccepted;
+                
+                _context.Questionnaires.Update(questionnaire);
+                await _context.SaveChangesAsync();
             }
+            
             else
             {
                 return BadRequest("Incorrect value of status");
             }
             
-            _context.Questionnaires.Update(questionnaire);
+            
+            return Ok("Status was changed");
         }
-        
-        await _context.SaveChangesAsync();
 
-        return Ok("Status was changed");
+        return BadRequest("Questionnaire is not exist");
     }
 
     [HttpDelete("deletePotentialParticipant")]
